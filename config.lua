@@ -3,10 +3,20 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
 --
-
+-- TODO Test Comment
 -- Plugins
 lvim.plugins = {
-  "cpea2506/one_monokai.nvim"
+  "cpea2506/one_monokai.nvim",
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  }
+
 }
 
 lvim.colorscheme = "one_monokai"
