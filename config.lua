@@ -10,11 +10,7 @@ lvim.plugins = {
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
+    opts = {}
   }
 
 }
@@ -26,6 +22,7 @@ lvim.colorscheme = "one_monokai"
 lvim.builtin.treesitter.ensure_installed = {
   'rust',
   'php',
+  'ocaml',
   'javascript',
   'typescript',
 }
@@ -40,3 +37,44 @@ local lsp_manager = require('lvim.lsp.manager')
 for _, lang in ipairs(lsp_languages) do
   lsp_manager.setup(lang)
 end
+
+local black = "#000000"
+local dev_icons = require('nvim-web-devicons')
+
+dev_icons.setup({
+  override_by_filename = {
+    ["dune-project"] = {
+      icon = "🏜️",
+      color = black,
+      name = "Dune",
+    },
+    ["dune"] = {
+      icon = "🏜️",
+      color = black,
+      name = "Dune",
+    },
+  },
+
+  override_by_extension = {
+    ml = {
+      icon = "🐫",
+      color = black,
+      name = "OCaml",
+    },
+    opam = {
+      icon = "🏜️",
+      color = black,
+      name = "OPAM",
+    },
+    rs = {
+      icon = "🦀",
+      color = black,
+      name = "Rust",
+    },
+    php = {
+      icon = "🐘",
+      color = black,
+      name = "PHP",
+    }
+  }
+})
