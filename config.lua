@@ -2,16 +2,15 @@
 -- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
---
--- TODO Test Comment
--- Plugins
+
 lvim.plugins = {
   "cpea2506/one_monokai.nvim",
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {}
-  }
+  },
+  "jwalton512/vim-blade"
 
 }
 
@@ -25,12 +24,14 @@ lvim.builtin.treesitter.ensure_installed = {
   'ocaml',
   'javascript',
   'typescript',
+  'blade',
 }
 
 local lsp_languages = {
   "rust",
   "ocaml",
   "intelephense", -- PHP
+  "python",
 }
 
 local lsp_manager = require('lvim.lsp.manager')
@@ -38,9 +39,16 @@ for _, lang in ipairs(lsp_languages) do
   lsp_manager.setup(lang)
 end
 
-local black = "#000000"
+
 local dev_icons = require('nvim-web-devicons')
 
+vim.filetype.add({
+  pattern = {
+    ['.*%.blade%.php'] = 'blade',
+  },
+})
+
+local black = '#000000'
 dev_icons.setup({
   override_by_filename = {
     ["dune-project"] = {
