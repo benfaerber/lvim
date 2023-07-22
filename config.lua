@@ -10,8 +10,9 @@ lvim.plugins = {
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {}
   },
-  "jwalton512/vim-blade"
-
+  "jwalton512/vim-blade",
+  "nkrkv/tree-sitter-rescript",
+  "rescript-lang/vim-rescript",
 }
 
 lvim.colorscheme = "one_monokai"
@@ -27,18 +28,12 @@ lvim.builtin.treesitter.ensure_installed = {
   'blade',
 }
 
-local lsp_languages = {
-  "rust",
-  "ocaml",
-  "intelephense", -- PHP
-  "python",
-}
 
 local lsp_manager = require('lvim.lsp.manager')
-for _, lang in ipairs(lsp_languages) do
-  lsp_manager.setup(lang)
-end
-
+lsp_manager.setup('rust')
+lsp_manager.setup('ocaml')
+lsp_manager.setup('intelephense')
+lsp_manager.setup('python')
 
 local dev_icons = require('nvim-web-devicons')
 
