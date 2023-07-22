@@ -25,7 +25,6 @@ lvim.builtin.treesitter.ensure_installed = {
   'ocaml',
   'javascript',
   'typescript',
-  'blade',
 }
 
 
