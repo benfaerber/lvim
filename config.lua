@@ -34,7 +34,6 @@ lsp_manager.setup('ocaml')
 lsp_manager.setup('intelephense')
 lsp_manager.setup('python')
 
-local dev_icons = require('nvim-web-devicons')
 
 vim.filetype.add({
   pattern = {
@@ -43,6 +42,8 @@ vim.filetype.add({
 })
 
 local black = '#000000'
+local dev_icons = require('nvim-web-devicons')
+
 dev_icons.setup({
   override_by_filename = {
     ["dune-project"] = {
@@ -55,6 +56,24 @@ dev_icons.setup({
       color = black,
       name = "Dune",
     },
+    ["artisan"] = {
+      icon = "🎨",
+      color = black,
+      name = "Artisan",
+    },
+
+    ["docker-composer.yml"] = {
+      icon = "🐳",
+      color = black,
+      name = "Docker",
+    },
+
+    ["Dockerfile"] = {
+      icon = "🐳",
+      color = black,
+      name = "Docker",
+    },
+
   },
 
   override_by_extension = {
@@ -77,6 +96,6 @@ dev_icons.setup({
       icon = "🐘",
       color = black,
       name = "PHP",
-    }
+    },
   }
 })
