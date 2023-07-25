@@ -13,6 +13,8 @@ lvim.plugins = {
   "jwalton512/vim-blade",
   "nkrkv/tree-sitter-rescript",
   "rescript-lang/vim-rescript",
+  "mattn/emmet-vim",
+  "f-person/git-blame.nvim",
 }
 
 lvim.colorscheme = "one_monokai"
@@ -34,15 +36,18 @@ lsp_manager.setup('ocaml')
 lsp_manager.setup('intelephense')
 lsp_manager.setup('python')
 
-
 vim.filetype.add({
   pattern = {
     ['.*%.blade%.php'] = 'blade',
+    [".*%.zsh-theme"] = "shell",
   },
 })
 
 local black = '#000000'
 local dev_icons = require('nvim-web-devicons')
+
+local icon_ocaml = ""
+local icon_ferris = ""
 
 dev_icons.setup({
   override_by_filename = {
@@ -78,8 +83,8 @@ dev_icons.setup({
 
   override_by_extension = {
     ml = {
-      icon = "🐫",
-      color = black,
+      icon = icon_ocaml,
+      color = "#F0C674",
       name = "OCaml",
     },
     opam = {
@@ -88,14 +93,20 @@ dev_icons.setup({
       name = "OPAM",
     },
     rs = {
-      icon = "🦀",
-      color = black,
+      icon = icon_ferris,
+      color = "#CC6666",
       name = "Rust",
-    },
-    php = {
-      icon = "🐘",
-      color = black,
-      name = "PHP",
     },
   }
 })
+
+-- Git Blame Setup
+vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
+local git_blame = require('gitblame')
+-- Add to bottom status bar
+lvim.builtin.lualine.sections = {
+  lualine_c = {
+    { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available }
+  }
+}
+
