@@ -15,6 +15,7 @@ lvim.plugins = {
   "rescript-lang/vim-rescript",
   "mattn/emmet-vim",
   "f-person/git-blame.nvim",
+  "jparise/vim-graphql",
 }
 
 lvim.colorscheme = "one_monokai"
@@ -100,6 +101,9 @@ dev_icons.setup({
   }
 })
 
+
+vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
+vim.cmd([[autocmd BufEnter * setlocal autochdir]])
 -- Git Blame Setup
 vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
 local git_blame = require('gitblame')
