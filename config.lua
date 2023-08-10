@@ -137,4 +137,6 @@ formatters.setup {
     },
 }
 
-
+lvim.builtin.which_key.mappings['t'] = {
+    '<cmd>sp|te<CR>', "Terminal"
+}
