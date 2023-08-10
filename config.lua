@@ -101,9 +101,11 @@ dev_icons.setup({
   }
 })
 
-
+-- Set shift width to 4 on each new buffer
 vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
+-- Set working dir to location of current buffer
 vim.cmd([[autocmd BufEnter * setlocal autochdir]])
+
 -- Git Blame Setup
 vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
 local git_blame = require('gitblame')
@@ -113,4 +115,26 @@ lvim.builtin.lualine.sections = {
     { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available }
   }
 }
+
+-- Formatters
+local formatters = require "lvim.lsp.null-ls.formatters"
+formatters.setup {
+    {
+        name = "prettier",
+        args = {},
+        filetypes = {
+            "typescript",
+            "typescriptreact",
+            "javascript",
+            "javascriptreact",
+        }
+    },
+    {
+        name = "ocamlformat"
+    },
+    {
+        name = "rustfmt"
+    },
+}
+
 
