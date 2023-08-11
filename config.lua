@@ -54,12 +54,12 @@ dev_icons.setup({
   override_by_filename = {
     ["dune-project"] = {
       icon = "🏜️",
-      color = black,
+      color = "#754b02",
       name = "Dune",
     },
     ["dune"] = {
       icon = "🏜️",
-      color = black,
+      color = "#754b02",
       name = "Dune",
     },
     ["artisan"] = {
@@ -67,19 +67,6 @@ dev_icons.setup({
       color = black,
       name = "Artisan",
     },
-
-    ["docker-composer.yml"] = {
-      icon = "🐳",
-      color = black,
-      name = "Docker",
-    },
-
-    ["Dockerfile"] = {
-      icon = "🐳",
-      color = black,
-      name = "Docker",
-    },
-
   },
 
   override_by_extension = {
@@ -90,7 +77,7 @@ dev_icons.setup({
     },
     opam = {
       icon = "🏜️",
-      color = black,
+      color = "#F0C674",
       name = "OPAM",
     },
     rs = {
@@ -104,7 +91,7 @@ dev_icons.setup({
 -- Set shift width to 4 on each new buffer
 vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
 -- Set working dir to location of current buffer
-vim.cmd([[autocmd BufEnter * setlocal autochdir]])
+-- vim.cmd([[autocmd BufEnter * setlocal autochdir]])
 
 -- Git Blame Setup
 vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
