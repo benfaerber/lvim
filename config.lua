@@ -40,7 +40,7 @@ lsp_manager.setup('python')
 vim.filetype.add({
   pattern = {
     ['.*%.blade%.php'] = 'blade',
-    [".*%.zsh-theme"] = "shell",
+    ["normie.zsh-theme"] = "shell",
   },
 })
 
@@ -53,13 +53,13 @@ local icon_ferris = ""
 dev_icons.setup({
   override_by_filename = {
     ["dune-project"] = {
-      icon = "🏜️",
-      color = "#754b02",
+      icon = icon_ocaml,
+      color = "#B294BB",
       name = "Dune",
     },
     ["dune"] = {
-      icon = "🏜️",
-      color = "#754b02",
+      icon = icon_ocaml,
+      color = "#B294BB",
       name = "Dune",
     },
     ["artisan"] = {
@@ -75,10 +75,15 @@ dev_icons.setup({
       color = "#F0C674",
       name = "OCaml",
     },
+    -- mli = {
+      -- icon = icon_ocaml,
+      -- color = "#B294BB",
+      -- name = "OCaml"
+    -- },
     opam = {
       icon = "🏜️",
       color = "#F0C674",
-      name = "OPAM",
+      name = "Opam",
     },
     rs = {
       icon = icon_ferris,
