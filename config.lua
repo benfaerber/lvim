@@ -89,7 +89,7 @@ dev_icons.setup({
 })
 
 -- Set shift width to 4 on each new buffer
-vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
+-- vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
 -- Set working dir to location of current buffer
 -- vim.cmd([[autocmd BufEnter * setlocal autochdir]])
 
