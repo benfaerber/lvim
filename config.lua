@@ -139,4 +139,5 @@ lvim.builtin.which_key.mappings['t'] = {
     f = {":FloatermNew python3<CR>", "Python"},
     g = {":FloatermNew utop<CR>", "OCaml"},
     t = {":FloatermToggle<CR>", "Toggle"},
+    p = {":FloatermNew --wintype=normal --position=botright --height=8 tinker<CR>", "Below"},
 }
