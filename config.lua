@@ -28,6 +28,7 @@ lvim.builtin.treesitter.ensure_installed = {
   'ocaml',
   'javascript',
   'typescript',
+  'go',
 }
 
 
@@ -36,6 +37,7 @@ lsp_manager.setup('rust')
 lsp_manager.setup('ocaml')
 lsp_manager.setup('intelephense')
 lsp_manager.setup('python')
+lsp_manager.setup('go')
 
 vim.filetype.add({
   pattern = {
