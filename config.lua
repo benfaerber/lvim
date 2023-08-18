@@ -40,33 +40,34 @@ lsp_manager.setup('intelephense')
 lsp_manager.setup('python')
 lsp_manager.setup('go')
 
-vim.filetype.add({
-  pattern = {
-    ['.*%.blade%.php'] = 'blade',
-    ["normie.zsh-theme"] = "shell",
-  },
-})
+vim.cmd([[au BufNewFile,BufRead *.zsh-theme set filetype=zsh]])
+vim.cmd([[au BufNewFile,BufRead *.blade.php set filetype=blade]])
 
 local black = '#000000'
 local dev_icons = require('nvim-web-devicons')
 
-local icon_ocaml = ""
-local icon_ferris = ""
+local icons = {
+    ocaml = "",
+    ferris = "",
+    terminal = "",
+    art = "🎨",
+    desert = "🏜️",
+}
 
 dev_icons.setup({
   override_by_filename = {
     ["dune-project"] = {
-      icon = icon_ocaml,
+      icon = icons.ocaml,
       color = "#B294BB",
       name = "Dune",
     },
     ["dune"] = {
-      icon = icon_ocaml,
+      icon = icons.ocaml,
       color = "#B294BB",
       name = "Dune",
     },
     ["artisan"] = {
-      icon = "🎨",
+      icon = icons.art,
       color = black,
       name = "Artisan",
     },
@@ -74,22 +75,27 @@ dev_icons.setup({
 
   override_by_extension = {
     ml = {
-      icon = icon_ocaml,
+      icon = icons.ocaml,
       color = "#F0C674",
       name = "OCaml",
     },
-    -- mli = {
-      -- icon = icon_ocaml,
-      -- color = "#B294BB",
-      -- name = "OCaml"
-    -- },
+    mli = {
+      icon = icons.ocaml,
+      color = "#B294BB",
+      name = "OCaml"
+    },
+    ['zsh-theme'] = {
+      icon = icons.terminal,
+      color = "#98C379",
+      name = "ZSH",
+    },
     opam = {
-      icon = "🏜️",
+      icon = icons.desert,
       color = "#F0C674",
       name = "Opam",
     },
     rs = {
-      icon = icon_ferris,
+      icon = icons.ferris,
       color = "#CC6666",
       name = "Rust",
     },
