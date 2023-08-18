@@ -16,6 +16,7 @@ lvim.plugins = {
   "mattn/emmet-vim",
   "f-person/git-blame.nvim",
   "jparise/vim-graphql",
+  "voldikss/vim-floaterm",
 }
 
 lvim.colorscheme = "one_monokai"
@@ -132,5 +133,10 @@ formatters.setup {
 }
 
 lvim.builtin.which_key.mappings['t'] = {
-    '<cmd>sp|te<CR>', "Terminal"
+    name = "+Terminal",
+    h = {":FloatermNew --wintype=normal --position=botright --height=8<CR>", "Below"},
+    v = {":FloatermNew --wintype=vsplit --position=right --height=8<CR>", "Side"},
+    f = {":FloatermNew python3<CR>", "Python"},
+    g = {":FloatermNew utop<CR>", "OCaml"},
+    t = {":FloatermToggle<CR>", "Toggle"},
 }
