@@ -160,8 +160,17 @@ lvim.builtin.which_key.mappings['t'] = {
     f = { ":FloatermNew --title=Python python3<CR>", "Python" },
     g = { ":FloatermNew --title=OCaml utop<CR>", "OCaml" },
     j = { ":FloatermNew --title=Javascript node<CR>", "Javascript" },
+    d = { ":FloatermNew --title=Haskell ghci<CR>", "Haskell" },
     t = { ":FloatermToggle --title=Shell<CR>", "Popup" },
     p = { ":FloatermNew --title=Laravel --wintype=normal --position=botright --height=8 tinker<CR>", "Tinker" },
 }
 
 lvim.builtin.which_key.mappings['T'] = {}
+
+vim.diagnostic.config({
+  virtual_text = true
+})
+
+-- Show line diagnostics automatically in hover window
+vim.o.updatetime = 250
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
