@@ -4,97 +4,121 @@
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
 lvim.plugins = {
-  "cpea2506/one_monokai.nvim",
-  {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {}
-  },
-  "jwalton512/vim-blade",
-  "nkrkv/tree-sitter-rescript",
-  "rescript-lang/vim-rescript",
-  "mattn/emmet-vim",
-  "f-person/git-blame.nvim",
-  "jparise/vim-graphql",
+    "cpea2506/one_monokai.nvim",
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {}
+    },
+    "jwalton512/vim-blade",
+    "nkrkv/tree-sitter-rescript",
+    "rescript-lang/vim-rescript",
+    "mattn/emmet-vim",
+    "f-person/git-blame.nvim",
+    "jparise/vim-graphql",
+    "voldikss/vim-floaterm",
+    "p00f/nvim-ts-rainbow",
 }
 
 lvim.colorscheme = "one_monokai"
 
--- Language Support
-
-lvim.builtin.treesitter.ensure_installed = {
-  'rust',
-  'php',
-  'ocaml',
-  'javascript',
-  'typescript',
+require 'nvim-treesitter.configs'.setup {
+    rainbow = {
+        enable = true,
+        -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+        extended_mode = true,
+        colors = {
+            "#aaaaaa",
+            "#87cefa",
+            "#da70d6",
+            "#f8fc94",
+        },
+    }
 }
 
+-- Language Support
+lvim.builtin.treesitter.ensure_installed = {
+    'rust',
+    'php',
+    'ocaml',
+    'javascript',
+    'typescript',
+    'go',
+    'lua',
+}
 
 local lsp_manager = require('lvim.lsp.manager')
 lsp_manager.setup('rust')
 lsp_manager.setup('ocaml')
 lsp_manager.setup('intelephense')
 lsp_manager.setup('python')
+lsp_manager.setup('go')
 
-vim.filetype.add({
-  pattern = {
-    ['.*%.blade%.php'] = 'blade',
-    ["normie.zsh-theme"] = "shell",
-  },
-})
+-- Filetype Patterns
+vim.cmd([[au BufNewFile,BufRead *.zsh-theme set filetype=zsh]])
+vim.cmd([[au BufNewFile,BufRead *.blade.php set filetype=blade]])
 
 local black = '#000000'
 local dev_icons = require('nvim-web-devicons')
 
-local icon_ocaml = ""
-local icon_ferris = ""
+local icons = {
+    ocaml = "",
+    ferris = "",
+    terminal = "",
+    art = "🎨",
+    desert = "🏜️",
+}
 
 dev_icons.setup({
-  override_by_filename = {
-    ["dune-project"] = {
-      icon = icon_ocaml,
-      color = "#B294BB",
-      name = "Dune",
+    override_by_filename = {
+        ["dune-project"] = {
+            icon = icons.ocaml,
+            color = "#B294BB",
+            name = "Dune",
+        },
+        ["dune"] = {
+            icon = icons.ocaml,
+            color = "#B294BB",
+            name = "Dune",
+        },
+        ["artisan"] = {
+            icon = icons.art,
+            color = black,
+            name = "Artisan",
+        },
     },
-    ["dune"] = {
-      icon = icon_ocaml,
-      color = "#B294BB",
-      name = "Dune",
-    },
-    ["artisan"] = {
-      icon = "🎨",
-      color = black,
-      name = "Artisan",
-    },
-  },
 
-  override_by_extension = {
-    ml = {
-      icon = icon_ocaml,
-      color = "#F0C674",
-      name = "OCaml",
-    },
-    -- mli = {
-      -- icon = icon_ocaml,
-      -- color = "#B294BB",
-      -- name = "OCaml"
-    -- },
-    opam = {
-      icon = "🏜️",
-      color = "#F0C674",
-      name = "Opam",
-    },
-    rs = {
-      icon = icon_ferris,
-      color = "#CC6666",
-      name = "Rust",
-    },
-  }
+    override_by_extension = {
+        ml = {
+            icon = icons.ocaml,
+            color = "#F0C674",
+            name = "OCaml",
+        },
+        mli = {
+            icon = icons.ocaml,
+            color = "#B294BB",
+            name = "OCaml"
+        },
+        ['zsh-theme'] = {
+            icon = icons.terminal,
+            color = "#98C379",
+            name = "ZSH",
+        },
+        opam = {
+            icon = icons.desert,
+            color = "#F0C674",
+            name = "Opam",
+        },
+        rs = {
+            icon = icons.ferris,
+            color = "#CC6666",
+            name = "Rust",
+        },
+    }
 })
 
 -- Set shift width to 4 on each new buffer
--- vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
+vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
 -- Set working dir to location of current buffer
 -- vim.cmd([[autocmd BufEnter * setlocal autochdir]])
 
@@ -103,9 +127,9 @@ vim.g.gitblame_display_virtual_text = 0 -- Disable virtual text
 local git_blame = require('gitblame')
 -- Add to bottom status bar
 lvim.builtin.lualine.sections = {
-  lualine_c = {
-    { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available }
-  }
+    lualine_c = {
+        { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available }
+    }
 }
 
 -- Formatters
@@ -130,5 +154,23 @@ formatters.setup {
 }
 
 lvim.builtin.which_key.mappings['t'] = {
-    '<cmd>sp|te<CR>', "Terminal"
+    name = "+Terminal",
+    h = { ":FloatermNew --wintype=normal --position=botright --height=8<CR>", "Below" },
+    v = { ":FloatermNew --wintype=vsplit --position=right --height=8<CR>", "Side" },
+    f = { ":FloatermNew --title=Python python3<CR>", "Python" },
+    g = { ":FloatermNew --title=OCaml utop<CR>", "OCaml" },
+    j = { ":FloatermNew --title=Javascript node<CR>", "Javascript" },
+    d = { ":FloatermNew --title=Haskell ghci<CR>", "Haskell" },
+    t = { ":FloatermToggle --title=Shell<CR>", "Popup" },
+    p = { ":FloatermNew --title=Laravel --wintype=normal --position=botright --height=8 tinker<CR>", "Tinker" },
 }
+
+lvim.builtin.which_key.mappings['T'] = {}
+
+vim.diagnostic.config({
+  virtual_text = true
+})
+
+-- Show line diagnostics automatically in hover window
+vim.o.updatetime = 250
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
