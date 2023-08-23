@@ -11,8 +11,8 @@ lvim.plugins = {
         opts = {}
     },
     "jwalton512/vim-blade",
-    "nkrkv/tree-sitter-rescript",
     "rescript-lang/vim-rescript",
+    "nkrkv/nvim-treesitter-rescript",
     "mattn/emmet-vim",
     "f-person/git-blame.nvim",
     "jparise/vim-graphql",
@@ -36,7 +36,7 @@ require 'nvim-treesitter.configs'.setup {
     }
 }
 
--- Language Support
+-- Languakge Support
 lvim.builtin.treesitter.ensure_installed = {
     'rust',
     'php',
@@ -45,6 +45,8 @@ lvim.builtin.treesitter.ensure_installed = {
     'typescript',
     'go',
     'lua',
+    'python',
+    'rescript',
 }
 
 local lsp_manager = require('lvim.lsp.manager')
@@ -98,6 +100,16 @@ dev_icons.setup({
             icon = icons.ocaml,
             color = "#B294BB",
             name = "OCaml"
+        },
+        res = {
+            icon = icons.ocaml,
+            color = "#CC6666",
+            name = "Rescript",
+        },
+        re = {
+            icon = icons.ocaml,
+            color = "#CC6666",
+            name = "Rescript",
         },
         ['zsh-theme'] = {
             icon = icons.terminal,
@@ -167,10 +179,10 @@ lvim.builtin.which_key.mappings['t'] = {
 
 lvim.builtin.which_key.mappings['T'] = {}
 
-vim.diagnostic.config({
-  virtual_text = true
-})
+-- vim.diagnostic.config({
+--   virtual_text = true
+-- })
 
--- Show line diagnostics automatically in hover window
-vim.o.updatetime = 250
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+-- -- Show line diagnostics automatically in hover window
+-- vim.o.updatetime = 250
+-- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
