@@ -118,7 +118,7 @@ dev_icons.setup({
 })
 
 -- Set shift width to 4 on each new buffer
-vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
+-- vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
 -- Set working dir to location of current buffer
 -- vim.cmd([[autocmd BufEnter * setlocal autochdir]])
 
@@ -171,6 +171,8 @@ vim.diagnostic.config({
   virtual_text = true
 })
 
+vim.cmd([[set relativenumber]])
+
 -- Show line diagnostics automatically in hover window
-vim.o.updatetime = 250
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+-- vim.o.updatetime = 250
+-- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
