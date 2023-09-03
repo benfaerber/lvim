@@ -2,7 +2,7 @@
 -- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
-
+lvim.lsp.automatic_configuration.skipped_servers = {"dart"}
 lvim.plugins = {
     "cpea2506/one_monokai.nvim",
     {
@@ -18,6 +18,17 @@ lvim.plugins = {
     "jparise/vim-graphql",
     "voldikss/vim-floaterm",
     "p00f/nvim-ts-rainbow",
+    "NvChad/nvim-colorizer.lua",
+    {
+        'akinsho/flutter-tools.nvim',
+        lazy = false,
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'stevearc/dressing.nvim', -- optional for vim.ui.select
+        },
+        config = true,
+        ft = "dart",
+    },
 }
 
 lvim.colorscheme = "one_monokai"
@@ -35,6 +46,10 @@ require 'nvim-treesitter.configs'.setup {
         },
     }
 }
+
+require("flutter-tools").setup {}
+
+require 'colorizer'.setup()
 
 -- Languakge Support
 lvim.builtin.treesitter.ensure_installed = {
@@ -62,6 +77,7 @@ vim.cmd([[au BufNewFile,BufRead *.blade.php set filetype=blade]])
 
 local black = '#000000'
 local dev_icons = require('nvim-web-devicons')
+local dune_purple = "#B294BB"
 
 local icons = {
     ocaml = "",
@@ -75,12 +91,12 @@ dev_icons.setup({
     override_by_filename = {
         ["dune-project"] = {
             icon = icons.ocaml,
-            color = "#B294BB",
+            color = dune_purple, 
             name = "Dune",
         },
         ["dune"] = {
             icon = icons.ocaml,
-            color = "#B294BB",
+            color = dune_purple,
             name = "Dune",
         },
         ["artisan"] = {
@@ -98,7 +114,7 @@ dev_icons.setup({
         },
         mli = {
             icon = icons.ocaml,
-            color = "#B294BB",
+            color = dune_purple,
             name = "OCaml"
         },
         res = {
@@ -110,6 +126,11 @@ dev_icons.setup({
             icon = icons.ocaml,
             color = "#CC6666",
             name = "Rescript",
+        },
+        ['ocamlformat'] = {
+            icon = icons.ocaml,
+            color = dune_purple,
+            name = "OCamlFormat",
         },
         ['zsh-theme'] = {
             icon = icons.terminal,
@@ -178,6 +199,15 @@ lvim.builtin.which_key.mappings['t'] = {
 }
 
 lvim.builtin.which_key.mappings['T'] = {}
+
+lvim.builtin.which_key.mappings['a'] = {
+    name = "+Flutter",
+    s = { ":FlutterRun<CR>", "Start" },
+    d = { ":FlutterDevices<CR>", "Devices" },
+    r = { ":FlutterReload<CR>", "Reload" },
+    t = { ":FlutterRestart<CR>", "Restart" },
+    q = { ":FlutterQuit<CR>", "Quit" },
+}
 
 -- vim.diagnostic.config({
 --   virtual_text = true
