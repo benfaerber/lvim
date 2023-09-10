@@ -29,6 +29,7 @@ lvim.plugins = {
         config = true,
         ft = "dart",
     },
+    "axelvc/template-string.nvim",
 }
 
 lvim.colorscheme = "one_monokai"
