@@ -8,7 +8,9 @@ lvim.plugins = {
     {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
-        opts = {}
+        opts = {
+        
+        }
     },
     "jwalton512/vim-blade",
     "rescript-lang/vim-rescript",
@@ -51,6 +53,16 @@ require 'nvim-treesitter.configs'.setup {
 require("flutter-tools").setup {}
 
 require 'colorizer'.setup()
+
+require('template-string').setup({
+  filetypes = { 'html', 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'python' },
+  jsx_brackets = true,
+  remove_template_string = false,
+  restore_quotes = {
+    normal = [[']],
+    jsx = [["]],
+  },
+})
 
 -- Languakge Support
 lvim.builtin.treesitter.ensure_installed = {
