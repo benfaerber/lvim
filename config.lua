@@ -18,6 +18,7 @@ lvim.plugins = {
     "jparise/vim-graphql",
     "voldikss/vim-floaterm",
     "p00f/nvim-ts-rainbow",
+    "almo7aya/openingh.nvim",
 }
 
 lvim.colorscheme = "one_monokai"
@@ -169,6 +170,7 @@ lvim.builtin.which_key.mappings['t'] = {
 lvim.builtin.which_key.mappings['T'] = {}
 
 lvim.builtin.which_key.mappings.s.p = {":Telescope projects<CR>", "Projects"}
+lvim.builtin.which_key.mappings.g.w = {":OpenInGHFile<CR>", "Open on GitHub"}
 
 vim.diagnostic.config({
   virtual_text = true
