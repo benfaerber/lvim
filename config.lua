@@ -45,6 +45,7 @@ lvim.builtin.treesitter.ensure_installed = {
     'typescript',
     'go',
     'lua',
+    'python',
 }
 
 local lsp_manager = require('lvim.lsp.manager')
@@ -118,7 +119,7 @@ dev_icons.setup({
 })
 
 -- Set shift width to 4 on each new buffer
--- vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
+vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
 -- Set working dir to location of current buffer
 -- vim.cmd([[autocmd BufEnter * setlocal autochdir]])
 
@@ -166,6 +167,8 @@ lvim.builtin.which_key.mappings['t'] = {
 }
 
 lvim.builtin.which_key.mappings['T'] = {}
+
+lvim.builtin.which_key.mappings.s.p = {":Telescope projects<CR>", "Projects"}
 
 vim.diagnostic.config({
   virtual_text = true
