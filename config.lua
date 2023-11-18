@@ -2,15 +2,12 @@
 -- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
-lvim.lsp.automatic_configuration.skipped_servers = {"dart"}
 lvim.plugins = {
     "cpea2506/one_monokai.nvim",
     {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
-        opts = {
-        
-        }
+        opts = {}
     },
     "jwalton512/vim-blade",
     "rescript-lang/vim-rescript",
@@ -21,17 +18,8 @@ lvim.plugins = {
     "voldikss/vim-floaterm",
     "p00f/nvim-ts-rainbow",
     "NvChad/nvim-colorizer.lua",
-    {
-        'akinsho/flutter-tools.nvim',
-        lazy = false,
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'stevearc/dressing.nvim', -- optional for vim.ui.select
-        },
-        config = true,
-        ft = "dart",
-    },
     "axelvc/template-string.nvim",
+    "almo7aya/openingh.nvim",
 }
 
 lvim.colorscheme = "one_monokai"
@@ -49,8 +37,6 @@ require 'nvim-treesitter.configs'.setup {
         },
     }
 }
-
-require("flutter-tools").setup {}
 
 require 'colorizer'.setup()
 
@@ -104,7 +90,7 @@ dev_icons.setup({
     override_by_filename = {
         ["dune-project"] = {
             icon = icons.ocaml,
-            color = dune_purple, 
+            color = dune_purple,
             name = "Dune",
         },
         ["dune"] = {
@@ -212,15 +198,14 @@ lvim.builtin.which_key.mappings['t'] = {
 }
 
 lvim.builtin.which_key.mappings['T'] = {}
+lvim.builtin.which_key.mappings.s.p = {":Telescope projects<CR>", "Projects"}
+lvim.builtin.which_key.mappings.g.f = {":OpenInGHFile<CR>", "Open on GitHub"}
 
-lvim.builtin.which_key.mappings['a'] = {
-    name = "+Flutter",
-    s = { ":FlutterRun<CR>", "Start" },
-    d = { ":FlutterDevices<CR>", "Devices" },
-    r = { ":FlutterReload<CR>", "Reload" },
-    t = { ":FlutterRestart<CR>", "Restart" },
-    q = { ":FlutterQuit<CR>", "Quit" },
-}
+vim.diagnostic.config({
+  virtual_text = true
+})
+
+vim.cmd([[set relativenumber]])
 
 -- vim.diagnostic.config({
 --   virtual_text = true
