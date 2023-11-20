@@ -17,6 +17,7 @@ lvim.plugins = {
     "f-person/git-blame.nvim",
     "jparise/vim-graphql",
     "voldikss/vim-floaterm",
+    "NvChad/nvim-colorizer.lua",
     "p00f/nvim-ts-rainbow",
     "almo7aya/openingh.nvim",
 }
@@ -118,6 +119,8 @@ dev_icons.setup({
         },
     }
 })
+
+require'colorizer'.setup()
 
 -- Set shift width to 4 on each new buffer
 vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
