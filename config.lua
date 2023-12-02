@@ -11,7 +11,6 @@ lvim.plugins = {
         opts = {}
     },
     "jwalton512/vim-blade",
-    "nkrkv/tree-sitter-rescript",
     "rescript-lang/vim-rescript",
     "mattn/emmet-vim",
     "f-person/git-blame.nvim",
@@ -19,6 +18,7 @@ lvim.plugins = {
     "voldikss/vim-floaterm",
     "NvChad/nvim-colorizer.lua",
     "p00f/nvim-ts-rainbow",
+    "axelvc/template-string.nvim",
     "almo7aya/openingh.nvim",
 }
 
@@ -38,6 +38,16 @@ require 'nvim-treesitter.configs'.setup {
     }
 }
 
+require('template-string').setup({
+  filetypes = { 'html', 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'python' },
+  jsx_brackets = true,
+  remove_template_string = false,
+  restore_quotes = {
+    normal = [[']],
+    jsx = [["]],
+  },
+})
+
 -- Language Support
 lvim.builtin.treesitter.ensure_installed = {
     'rust',
@@ -48,6 +58,7 @@ lvim.builtin.treesitter.ensure_installed = {
     'go',
     'lua',
     'python',
+    'rescript',
 }
 
 local lsp_manager = require('lvim.lsp.manager')
@@ -63,6 +74,7 @@ vim.cmd([[au BufNewFile,BufRead *.blade.php set filetype=blade]])
 
 local black = '#000000'
 local dev_icons = require('nvim-web-devicons')
+local dune_purple = "#B294BB"
 
 local icons = {
     ocaml = "",
@@ -76,12 +88,12 @@ dev_icons.setup({
     override_by_filename = {
         ["dune-project"] = {
             icon = icons.ocaml,
-            color = "#B294BB",
+            color = dune_purple,
             name = "Dune",
         },
         ["dune"] = {
             icon = icons.ocaml,
-            color = "#B294BB",
+            color = dune_purple,
             name = "Dune",
         },
         ["artisan"] = {
@@ -99,7 +111,7 @@ dev_icons.setup({
         },
         mli = {
             icon = icons.ocaml,
-            color = "#B294BB",
+            color = dune_purple,
             name = "OCaml"
         },
         ['zsh-theme'] = {
@@ -190,6 +202,7 @@ vim.cmd([[set relativenumber]])
 
 -- Make _ count as a word seperator
 vim.cmd([[set iskeyword-=_]])
+vim.cmd([[set ic]])
 
 -- Show line diagnostics automatically in hover window
 -- vim.o.updatetime = 250
