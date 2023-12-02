@@ -12,6 +12,7 @@ lvim.plugins = {
     },
     "jwalton512/vim-blade",
     "rescript-lang/vim-rescript",
+    "nkrkv/nvim-treesitter-rescript",
     "mattn/emmet-vim",
     "f-person/git-blame.nvim",
     "jparise/vim-graphql",
