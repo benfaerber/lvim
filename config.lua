@@ -2,6 +2,7 @@
 -- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
+
 lvim.plugins = {
     "cpea2506/one_monokai.nvim",
     {
@@ -12,11 +13,12 @@ lvim.plugins = {
     "jwalton512/vim-blade",
     "rescript-lang/vim-rescript",
     "nkrkv/nvim-treesitter-rescript",
+    "mattn/emmet-vim",
     "f-person/git-blame.nvim",
     "jparise/vim-graphql",
     "voldikss/vim-floaterm",
-    "p00f/nvim-ts-rainbow",
     "NvChad/nvim-colorizer.lua",
+    "p00f/nvim-ts-rainbow",
     "axelvc/template-string.nvim",
     "almo7aya/openingh.nvim",
 }
@@ -37,8 +39,6 @@ require 'nvim-treesitter.configs'.setup {
     }
 }
 
-require 'colorizer'.setup()
-
 require('template-string').setup({
   filetypes = { 'html', 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'python' },
   jsx_brackets = true,
@@ -49,7 +49,7 @@ require('template-string').setup({
   },
 })
 
--- Languakge Support
+-- Language Support
 lvim.builtin.treesitter.ensure_installed = {
     'rust',
     'php',
@@ -115,21 +115,6 @@ dev_icons.setup({
             color = dune_purple,
             name = "OCaml"
         },
-        res = {
-            icon = icons.ocaml,
-            color = "#CC6666",
-            name = "Rescript",
-        },
-        re = {
-            icon = icons.ocaml,
-            color = "#CC6666",
-            name = "Rescript",
-        },
-        ['ocamlformat'] = {
-            icon = icons.ocaml,
-            color = dune_purple,
-            name = "OCamlFormat",
-        },
         ['zsh-theme'] = {
             icon = icons.terminal,
             color = "#98C379",
@@ -147,6 +132,8 @@ dev_icons.setup({
         },
     }
 })
+
+require'colorizer'.setup()
 
 -- Set shift width to 4 on each new buffer
 vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
@@ -197,8 +184,16 @@ lvim.builtin.which_key.mappings['t'] = {
 }
 
 lvim.builtin.which_key.mappings['T'] = {}
+
 lvim.builtin.which_key.mappings.s.p = {":Telescope projects<CR>", "Projects"}
-lvim.builtin.which_key.mappings.g.f = {":OpenInGHFile<CR>", "Open on GitHub"}
+lvim.builtin.which_key.mappings.g.w = {":OpenInGHFile<CR>", "Open on GitHub"}
+
+-- View
+lvim.builtin.which_key.mappings.v = {
+    name = "+View",
+    g = { ":OpenInGHFile<CR>", "View on GitHub" },
+    f = { ":! nautilus %:p:h<CR>", "View in File Explorer"},
+}
 
 vim.diagnostic.config({
   virtual_text = true
@@ -206,6 +201,10 @@ vim.diagnostic.config({
 
 vim.cmd([[set relativenumber]])
 
--- -- Show line diagnostics automatically in hover window
+-- Make _ count as a word seperator
+vim.cmd([[set iskeyword-=_]])
+vim.cmd([[set ic]])
+
+-- Show line diagnostics automatically in hover window
 -- vim.o.updatetime = 250
 -- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
