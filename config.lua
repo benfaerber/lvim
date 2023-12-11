@@ -21,6 +21,7 @@ lvim.plugins = {
     "p00f/nvim-ts-rainbow",
     "axelvc/template-string.nvim",
     "almo7aya/openingh.nvim",
+    "rest-nvim/rest.nvim",
 }
 
 lvim.colorscheme = "one_monokai"
