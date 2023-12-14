@@ -204,6 +204,14 @@ lvim.builtin.which_key.mappings.v = {
     f = { ":! nautilus %:p:h<CR>", "View in File Explorer"},
 }
 
+-- Rest
+lvim.builtin.which_key.mappings.r = {
+    name = "+Rest",
+    r = { ":lua require('rest-nvim').run()<CR>", "Send Request"},
+    p = { ":lua require('rest-nvim').run(true)<CR>", "Preview Request"},
+    l = { ":lua require('rest-nvim').last()<CR>", "Last Request"},
+}
+
 vim.diagnostic.config({
   virtual_text = true
 })
