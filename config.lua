@@ -21,7 +21,15 @@ lvim.plugins = {
     "p00f/nvim-ts-rainbow",
     "axelvc/template-string.nvim",
     "almo7aya/openingh.nvim",
-    "rest-nvim/rest.nvim",
+    {
+        "rest-nvim/rest.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+             require("rest-nvim").setup({
+               --- Get the same options from Packer setup
+            })
+          end
+    }
 }
 
 lvim.colorscheme = "one_monokai"
@@ -196,12 +204,21 @@ lvim.builtin.which_key.mappings.v = {
     f = { ":! nautilus %:p:h<CR>", "View in File Explorer"},
 }
 
+-- Rest
+lvim.builtin.which_key.mappings.r = {
+    name = "+Rest",
+    r = { ":lua require('rest-nvim').run()<CR>", "Send Request"},
+    p = { ":lua require('rest-nvim').run(true)<CR>", "Preview Request"},
+    l = { ":lua require('rest-nvim').last()<CR>", "Last Request"},
+}
+
 vim.diagnostic.config({
   virtual_text = true
 })
 
 vim.cmd([[set relativenumber]])
 
+-- happy_camper_dot_com
 -- Make _ count as a word seperator
 vim.cmd([[set iskeyword-=_]])
 vim.cmd([[set ic]])
