@@ -22,13 +22,23 @@ lvim.plugins = {
     "axelvc/template-string.nvim",
     "almo7aya/openingh.nvim",
     {
-        "rest-nvim/rest.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        config = function()
-             require("rest-nvim").setup({
-               --- Get the same options from Packer setup
-            })
-          end
+      "vhyrro/luarocks.nvim",
+      config = function()
+        require("luarocks").setup({})
+      end,
+    },
+    {
+      "rest-nvim/rest.nvim",
+      ft = "http",
+      dependencies = { "luarocks.nvim" },
+      config = function()
+        require("rest-nvim").setup()
+      end,
+    },
+    {
+        "folke/trouble.nvim",
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {},
     }
 }
 
@@ -145,7 +155,7 @@ dev_icons.setup({
 require'colorizer'.setup()
 
 -- Set shift width to 4 on each new buffer
--- vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
+vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
 -- Set working dir to location of current buffer
 -- vim.cmd([[autocmd BufEnter * setlocal autochdir]])
 
