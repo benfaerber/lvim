@@ -21,20 +21,20 @@ lvim.plugins = {
     "p00f/nvim-ts-rainbow",
     "axelvc/template-string.nvim",
     "almo7aya/openingh.nvim",
-    {
-      "vhyrro/luarocks.nvim",
-      config = function()
-        require("luarocks").setup({})
-      end,
-    },
-    {
-      "rest-nvim/rest.nvim",
-      ft = "http",
-      dependencies = { "luarocks.nvim" },
-      config = function()
-        require("rest-nvim").setup()
-      end,
-    },
+    -- {
+    --   "vhyrro/luarocks.nvim",
+    --   config = function()
+    --     require("luarocks").setup({})
+    --   end,
+    -- },
+    -- {
+    --   "rest-nvim/rest.nvim",
+    --   ft = "http",
+    --   dependencies = { "luarocks.nvim" },
+    --   config = function()
+    --     require("rest-nvim").setup()
+    --   end,
+    -- },
     {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -190,6 +190,28 @@ formatters.setup {
     },
 }
 
+local Slumber = {}
+Slumber.toggle = function()
+  local Terminal = require("toggleterm.terminal").Terminal
+  local slumber = Terminal:new {
+    cmd = "slumber",
+    hidden = true,
+    direction = "float",
+    float_opts = {
+      border = "none",
+      width = 100000,
+      height = 100000,
+    },
+    on_open = function(_)
+      vim.cmd "startinsert!"
+    end,
+    on_close = function(_) end,
+    count = 99,
+  }
+  slumber:toggle()
+end
+
+
 lvim.builtin.which_key.mappings['t'] = {
     name = "+Terminal",
     h = { ":FloatermNew --wintype=normal --position=botright --height=8<CR>", "Below" },
@@ -212,6 +234,10 @@ lvim.builtin.which_key.mappings.v = {
     name = "+View",
     g = { ":OpenInGHFile<CR>", "View on GitHub" },
     f = { ":! nautilus %:p:h<CR>", "View in File Explorer"},
+    s = {
+        Slumber.toggle,
+        "Slumber"
+    }
 }
 
 -- Rest
