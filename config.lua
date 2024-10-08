@@ -211,7 +211,7 @@ lvim.builtin.which_key.mappings.g.w = {":OpenInGHFile<CR>", "Open on GitHub"}
 lvim.builtin.which_key.mappings.v = {
     name = "+View",
     g = { ":OpenInGHFile<CR>", "View on GitHub" },
-    f = { ":! nautilus %:p:h<CR>", "View in File Explorer"},
+    f = { ":! nautilus %:p:h &<CR>", "View in File Explorer"},
 }
 
 -- Rest
@@ -232,6 +232,9 @@ vim.cmd([[set relativenumber]])
 -- Make _ count as a word seperator
 vim.cmd([[set iskeyword-=_]])
 vim.cmd([[set ic]])
+
+-- spell check
+-- vim.cmd([[setlocal spell spelllang=en_us]])
 
 -- Show line diagnostics automatically in hover window
 -- vim.o.updatetime = 250
