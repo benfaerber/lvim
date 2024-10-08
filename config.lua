@@ -67,7 +67,6 @@ require('template-string').setup({
     jsx = [["]],
   },
 })
-
 -- Language Support
 lvim.builtin.treesitter.ensure_installed = {
     'rust',
@@ -190,6 +189,28 @@ formatters.setup {
     },
 }
 
+local Slumber = {}
+Slumber.toggle = function()
+  local Terminal = require("toggleterm.terminal").Terminal
+  local slumber = Terminal:new {
+    cmd = "slumber",
+    hidden = true,
+    direction = "float",
+    float_opts = {
+      border = "none",
+      width = 100000,
+      height = 100000,
+    },
+    on_open = function(_)
+      vim.cmd "startinsert!"
+    end,
+    on_close = function(_) end,
+    count = 99,
+  }
+  slumber:toggle()
+end
+
+
 lvim.builtin.which_key.mappings['t'] = {
     name = "+Terminal",
     h = { ":FloatermNew --wintype=normal --position=botright --height=8<CR>", "Below" },
@@ -212,6 +233,10 @@ lvim.builtin.which_key.mappings.v = {
     name = "+View",
     g = { ":OpenInGHFile<CR>", "View on GitHub" },
     f = { ":! nautilus %:p:h &<CR>", "View in File Explorer"},
+    s = {
+        Slumber.toggle,
+        "Slumber"
+    }
 }
 
 -- Rest
@@ -232,9 +257,6 @@ vim.cmd([[set relativenumber]])
 -- Make _ count as a word seperator
 vim.cmd([[set iskeyword-=_]])
 vim.cmd([[set ic]])
-
--- spell check
--- vim.cmd([[setlocal spell spelllang=en_us]])
 
 -- Show line diagnostics automatically in hover window
 -- vim.o.updatetime = 250
