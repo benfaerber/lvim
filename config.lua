@@ -21,20 +21,20 @@ lvim.plugins = {
     "p00f/nvim-ts-rainbow",
     "axelvc/template-string.nvim",
     "almo7aya/openingh.nvim",
-    -- {
-    --   "vhyrro/luarocks.nvim",
-    --   config = function()
-    --     require("luarocks").setup({})
-    --   end,
-    -- },
-    -- {
-    --   "rest-nvim/rest.nvim",
-    --   ft = "http",
-    --   dependencies = { "luarocks.nvim" },
-    --   config = function()
-    --     require("rest-nvim").setup()
-    --   end,
-    -- },
+    {
+      "vhyrro/luarocks.nvim",
+      config = function()
+        require("luarocks").setup({})
+      end,
+    },
+    {
+      "rest-nvim/rest.nvim",
+      ft = "http",
+      dependencies = { "luarocks.nvim" },
+      config = function()
+        require("rest-nvim").setup()
+      end,
+    },
     {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -67,7 +67,6 @@ require('template-string').setup({
     jsx = [["]],
   },
 })
-
 -- Language Support
 lvim.builtin.treesitter.ensure_installed = {
     'rust',
@@ -233,7 +232,7 @@ lvim.builtin.which_key.mappings.g.w = {":OpenInGHFile<CR>", "Open on GitHub"}
 lvim.builtin.which_key.mappings.v = {
     name = "+View",
     g = { ":OpenInGHFile<CR>", "View on GitHub" },
-    f = { ":! nautilus %:p:h<CR>", "View in File Explorer"},
+    f = { ":! nautilus %:p:h &<CR>", "View in File Explorer"},
     s = {
         Slumber.toggle,
         "Slumber"
