@@ -3,8 +3,6 @@
 -- Forum: https://www.reddit.com/r/lunarvim/
 -- Discord: https://discord.com/invite/Xb9B4Ny
 
--- Master
-
 lvim.plugins = {
     "cpea2506/one_monokai.nvim",
     {
