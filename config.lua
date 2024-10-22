@@ -24,20 +24,6 @@ lvim.plugins = {
     "axelvc/template-string.nvim",
     "almo7aya/openingh.nvim",
     {
-      "vhyrro/luarocks.nvim",
-      config = function()
-        require("luarocks").setup({})
-      end,
-    },
-    {
-      "rest-nvim/rest.nvim",
-      ft = "http",
-      dependencies = { "luarocks.nvim" },
-      config = function()
-        require("rest-nvim").setup()
-      end,
-    },
-    {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {},
@@ -240,14 +226,6 @@ lvim.builtin.which_key.mappings.v = {
         Slumber.toggle,
         "Slumber"
     }
-}
-
--- Rest
-lvim.builtin.which_key.mappings.r = {
-    name = "+Rest",
-    r = { ":lua require('rest-nvim').run()<CR>", "Send Request"},
-    p = { ":lua require('rest-nvim').run(true)<CR>", "Preview Request"},
-    l = { ":lua require('rest-nvim').last()<CR>", "Last Request"},
 }
 
 vim.diagnostic.config({
