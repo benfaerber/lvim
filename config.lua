@@ -47,13 +47,13 @@ require 'nvim-treesitter.configs'.setup {
 }
 
 require('template-string').setup({
-  filetypes = { 'html', 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'python' },
-  jsx_brackets = true,
-  remove_template_string = false,
-  restore_quotes = {
-    normal = [[']],
-    jsx = [["]],
-  },
+    filetypes = { 'html', 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'python' },
+    jsx_brackets = true,
+    remove_template_string = false,
+    restore_quotes = {
+        normal = [[']],
+        jsx = [["]],
+    },
 })
 -- Language Support
 lvim.builtin.treesitter.ensure_installed = {
@@ -139,7 +139,7 @@ dev_icons.setup({
     }
 })
 
-require'colorizer'.setup()
+require 'colorizer'.setup()
 
 -- Set shift width to 4 on each new buffer
 vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
@@ -152,7 +152,10 @@ local git_blame = require('gitblame')
 -- Add to bottom status bar
 lvim.builtin.lualine.sections = {
     lualine_c = {
-        { git_blame.get_current_blame_text, cond = git_blame.is_blame_text_available }
+        {
+            git_blame.get_current_blame_text,
+            cond = git_blame.is_blame_text_available,
+        }
     }
 }
 
@@ -179,23 +182,23 @@ formatters.setup {
 
 local Slumber = {}
 Slumber.toggle = function()
-  local Terminal = require("toggleterm.terminal").Terminal
-  local slumber = Terminal:new {
-    cmd = "slumber",
-    hidden = true,
-    direction = "float",
-    float_opts = {
-      border = "none",
-      width = 100000,
-      height = 100000,
-    },
-    on_open = function(_)
-      vim.cmd "startinsert!"
-    end,
-    on_close = function(_) end,
-    count = 99,
-  }
-  slumber:toggle()
+    local Terminal = require("toggleterm.terminal").Terminal
+    local slumber = Terminal:new {
+        cmd = "slumber",
+        hidden = true,
+        direction = "float",
+        float_opts = {
+            border = "none",
+            width = 100000,
+            height = 100000,
+        },
+        on_open = function(_)
+            vim.cmd "startinsert!"
+        end,
+        on_close = function(_) end,
+        count = 99,
+    }
+    slumber:toggle()
 end
 
 
@@ -209,27 +212,24 @@ lvim.builtin.which_key.mappings['t'] = {
     d = { ":FloatermNew --title=Haskell ghci<CR>", "Haskell" },
     t = { ":FloatermToggle --title=Shell<CR>", "Popup" },
     p = { ":FloatermNew --title=Laravel --wintype=normal --position=botright --height=8 tinker<CR>", "Tinker" },
+    n = { ":! alacritty --working-directory \"%:p:h\" &<CR>", "Open in Terminal in new window" },
 }
 
 lvim.builtin.which_key.mappings['T'] = {}
 
-lvim.builtin.which_key.mappings.s.p = {":Telescope projects<CR>", "Projects"}
-lvim.builtin.which_key.mappings.g.w = {":OpenInGHFile<CR>", "Open on GitHub"}
+lvim.builtin.which_key.mappings.s.p = { ":Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings.g.w = { ":OpenInGHFile<CR>", "Open on GitHub" }
 
 -- View
 lvim.builtin.which_key.mappings.v = {
     name = "+View",
     g = { ":OpenInGHFile<CR>", "View on GitHub" },
-    f = { ":! nautilus %:p:h &<CR>", "View in File Explorer"},
-    t = { ":! alacritty --working-directory \"%:p:h\" &<CR>", "Open in Terminal"},
-    s = {
-        Slumber.toggle,
-        "Slumber"
-    }
+    f = { ":! nautilus %:p:h &<CR>", "View in File Explorer" },
+    t = { ":! alacritty --working-directory \"%:p:h\" &<CR>", "Open in Terminal" },
 }
 
 vim.diagnostic.config({
-  virtual_text = true
+    virtual_text = true
 })
 
 vim.cmd([[set relativenumber]])
@@ -239,6 +239,5 @@ vim.cmd([[set relativenumber]])
 vim.cmd([[set iskeyword-=_]])
 vim.cmd([[set ic]])
 
--- Show line diagnostics automatically in hover window
--- vim.o.updatetime = 250
+-- Show line diagnostics automatically in hover window vim.o.updatetime = 250
 -- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
