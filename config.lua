@@ -234,6 +234,7 @@ lvim.builtin.which_key.mappings.v = {
     name = "+View",
     g = { ":OpenInGHFile<CR>", "View on GitHub" },
     f = { ":! nautilus %:p:h<CR>", "View in File Explorer"},
+    t = { ":! alacritty --working-directory \"%:p:h\" &<CR>", "Open in Terminal"},
     s = {
         Slumber.toggle,
         "Slumber"
