@@ -224,7 +224,7 @@ lvim.builtin.which_key.mappings['T'] = {}
 lvim.builtin.which_key.mappings.s.p = { ":Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings.g.w = { ":OpenInGHFile<CR>", "Open on GitHub" }
 
-local run_cmd = function (cmd)
+local run_cmd_bg = function (cmd)
     vim.cmd(":silent !" .. cmd .. " &")
 end
 
@@ -233,12 +233,12 @@ local open_in_vscode = function ()
     local filepath = vim.fn.expand("%")
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
     local goto_point = filepath .. ":" .. line .. ":" .. col
-    run_cmd("code \"" .. project_root .. "\" --new-window --goto \"" .. goto_point .. "\"")
+    run_cmd_bg("code \"" .. project_root .. "\" --new-window --goto \"" .. goto_point .. "\"")
 end
 
 local open_in_nautilus = function ()
     local dir = vim.fn.expand("%")
-    run_cmd("nautilus " .. dir)
+    run_cmd_bg("nautilus " .. dir)
 end
 
 local get_dir = function (filepath)
@@ -247,7 +247,7 @@ end
 
 local open_in_alacritty = function ()
     local dir = get_dir(vim.fn.expand("%"))
-    run_cmd("alacritty --working-directory " .. dir)
+    run_cmd_bg("alacritty --working-directory " .. dir)
 end
 
 -- View
