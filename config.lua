@@ -222,14 +222,13 @@ lvim.builtin.which_key.mappings.g.w = { ":OpenInGHFile<CR>", "Open on GitHub" }
 
 -- This opens the current file (respecting line and column) in VSCode
 local open_in_vscode = function ()
-    local dir = vim.fn.expand("%")
+    local filepath = vim.fn.expand("%")
+    local dir = filepath:match("(.+)/[^/]+$")
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    local goto_point = dir .. ":" .. line .. ":" .. col
-    os.execute("code --goto " .. goto_point)
-    return ''
+    local goto_point = filepath .. ":" .. line .. ":" .. col
+    os.execute("code \"" .. dir .. "\" --new-window --goto \"" .. goto_point .. "\"")
 end
 
--- This is runs it in the background without bothering neovim
 local open_in_nautilus = function ()
     local dir = vim.fn.expand("%")
     os.execute("nautilus " .. dir)
