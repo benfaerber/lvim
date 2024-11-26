@@ -24,7 +24,6 @@ lvim.plugins = {
     "jparise/vim-graphql",
     "voldikss/vim-floaterm",
     "NvChad/nvim-colorizer.lua",
-    "p00f/nvim-ts-rainbow",
     "axelvc/template-string.nvim",
     "almo7aya/openingh.nvim",
     {
@@ -59,6 +58,7 @@ require('template-string').setup({
         jsx = [["]],
     },
 })
+
 -- Language Support
 lvim.builtin.treesitter.ensure_installed = {
     'rust',
@@ -78,6 +78,7 @@ lsp.setup('ocaml')
 lsp.setup('intelephense')
 lsp.setup('python')
 lsp.setup('go')
+lsp.setup('lua')
 
 -- Filetype Patterns
 vim.cmd([[au BufNewFile,BufRead *.zsh-theme set filetype=zsh]])
