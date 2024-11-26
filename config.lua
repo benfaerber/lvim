@@ -68,12 +68,12 @@ lvim.builtin.treesitter.ensure_installed = {
     'rescript',
 }
 
-local lsp_manager = require('lvim.lsp.manager')
-lsp_manager.setup('rust')
-lsp_manager.setup('ocaml')
-lsp_manager.setup('intelephense')
-lsp_manager.setup('python')
-lsp_manager.setup('go')
+local lsp = require('lvim.lsp.manager')
+lsp.setup('rust')
+lsp.setup('ocaml')
+lsp.setup('intelephense')
+lsp.setup('python')
+lsp.setup('go')
 
 -- Filetype Patterns
 vim.cmd([[au BufNewFile,BufRead *.zsh-theme set filetype=zsh]])
@@ -220,12 +220,27 @@ lvim.builtin.which_key.mappings['T'] = {}
 lvim.builtin.which_key.mappings.s.p = { ":Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings.g.w = { ":OpenInGHFile<CR>", "Open on GitHub" }
 
+-- This opens the current file (respecting line and column) in VSCode
+local open_in_vscode = function ()
+    local dir = vim.fn.expand("%")
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    local goto_point = dir .. ":" .. line .. ":" .. col
+    os.execute("code --goto " .. goto_point)
+    return ''
+end
+
+local open_in_nautilus = function ()
+    local dir = vim.fn.expand("%")
+    os.execute("nautilus " .. dir)
+end
+
 -- View
 lvim.builtin.which_key.mappings.v = {
     name = "+View",
     g = { ":OpenInGHFile<CR>", "View on GitHub" },
-    f = { ":! nautilus %:p:h &<CR>", "View in File Explorer" },
+    f = { open_in_nautilus, "View in File Explorer" },
     t = { ":! alacritty --working-directory \"%:p:h\" &<CR>", "Open in Terminal" },
+    s = { open_in_vscode, "Open in VSCode" }
 }
 
 vim.diagnostic.config({
@@ -237,6 +252,7 @@ vim.cmd([[set relativenumber]])
 -- happy_camper_dot_com
 -- Make _ count as a word seperator
 vim.cmd([[set iskeyword-=_]])
+-- Case insensitive search
 vim.cmd([[set ic]])
 
 -- Show line diagnostics automatically in hover window vim.o.updatetime = 250
