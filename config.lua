@@ -229,9 +229,15 @@ local open_in_vscode = function ()
     return ''
 end
 
+-- This is runs it in the background without bothering neovim
 local open_in_nautilus = function ()
     local dir = vim.fn.expand("%")
     os.execute("nautilus " .. dir)
+end
+
+local open_in_alacritty = function ()
+    local dir = vim.fn.expand("%")
+    os.execute("alacritty --working-directory " .. dir)
 end
 
 -- View
@@ -239,7 +245,7 @@ lvim.builtin.which_key.mappings.v = {
     name = "+View",
     g = { ":OpenInGHFile<CR>", "View on GitHub" },
     f = { open_in_nautilus, "View in File Explorer" },
-    t = { ":! alacritty --working-directory \"%:p:h\" &<CR>", "Open in Terminal" },
+    t = { open_in_alacritty, "Open in Terminal" },
     s = { open_in_vscode, "Open in VSCode" }
 }
 
