@@ -227,7 +227,9 @@ end
 local open_in_vscode = function ()
     local filepath = vim.fn.expand("%")
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    local goto_point = filepath .. ":" .. line .. ":" .. col
+    -- To account for insert mode cursor vs normal cursor  
+    local offset_col = col + 2
+    local goto_point = filepath .. ":" .. line .. ":" .. offset_col
     run_cmd_bg("code \"" .. project_root .. "\" --new-window --goto \"" .. goto_point .. "\"")
 end
 
