@@ -54,6 +54,7 @@ require('template-string').setup({
         jsx = [["]],
     },
 })
+
 -- Language Support
 lvim.builtin.treesitter.ensure_installed = {
     'rust',
@@ -65,14 +66,18 @@ lvim.builtin.treesitter.ensure_installed = {
     'lua',
     'python',
     'rescript',
+    'c_sharp',
 }
 
 local lsp = require('lvim.lsp.manager')
 lsp.setup('rust')
 lsp.setup('ocaml')
 lsp.setup('intelephense')
+lsp.setup('javascript')
+lsp.setup('typescript')
 lsp.setup('python')
 lsp.setup('go')
+lsp.setup('c_sharp')
 
 -- Filetype Patterns
 vim.cmd([[au BufNewFile,BufRead *.zsh-theme set filetype=zsh]])
@@ -247,10 +252,16 @@ local open_in_alacritty = function ()
     run_cmd_bg("alacritty --working-directory " .. dir)
 end
 
+local open_project_in_github  = function ()
+    local repo_url = vim.fn.system("git -C " .. project_root .. " config --get remote.origin.url")
+    vim.fn.system("xdg-open " .. repo_url)
+end
+
 -- View
 lvim.builtin.which_key.mappings.v = {
     name = "+View",
-    g = { ":OpenInGHFile<CR>", "View on GitHub" },
+    g = { ":OpenInGHFile<CR>", "View on File on GitHub" },
+    h = { open_project_in_github, "View Project on GitHub" },
     f = { open_in_nautilus, "View in File Explorer" },
     t = { open_in_alacritty, "Open in Terminal" },
     s = { open_in_vscode, "Open in VSCode" }
