@@ -247,21 +247,51 @@ local get_dir = function (filepath)
     return string.match(filepath, "^(.-)/[^/]*$")
 end
 
+local get_file = function (filepath)
+    return string.match(filepath, "^.+/([^/]+)$")
+end
+
 local open_in_alacritty = function ()
     local dir = get_dir(vim.fn.expand("%"))
     run_cmd_bg("alacritty --working-directory " .. dir)
 end
 
+local open_in_browser = function (url)
+    vim.fn.system("xdg-open " .. url)
+end
+
 local open_project_in_github  = function ()
     local repo_url = vim.fn.system("git -C " .. project_root .. " config --get remote.origin.url")
-    vim.fn.system("xdg-open " .. repo_url)
+    open_in_browser(repo_url)
 end
+
+local trim = function (s)
+    return s:gsub("%s+", "")
+end
+
+local log = function (msg)
+    os.execute("echo \"[DEBUG $(date +\"%Y-%m-%d %H:%M:%S\")] " .. msg .. "\" >> /home/ben/.config/lvim/debug.log")
+end
+
+local open_pull_request_in_github = function ()
+    local repo_url = vim.fn.system("git -C " .. project_root .. " config --get remote.origin.url")
+    -- This usually ends with git
+    local naked_repo_url = trim(repo_url):gsub('.git$', "")
+
+    local branch_name = trim(vim.fn.system("git rev-parse --abbrev-ref HEAD"))
+    local master_path = trim(vim.fn.system("git symbolic-ref refs/remotes/origin/HEAD"))
+
+    local pr_url = naked_repo_url .. "/compare/" .. branch_name
+    open_in_browser(pr_url)
+end
+
 
 -- View
 lvim.builtin.which_key.mappings.v = {
     name = "+View",
     g = { ":OpenInGHFile<CR>", "View on File on GitHub" },
     h = { open_project_in_github, "View Project on GitHub" },
+    m = { open_pull_request_in_github, "Open Pull Request" },
     f = { open_in_nautilus, "View in File Explorer" },
     t = { open_in_alacritty, "Open in Terminal" },
     s = { open_in_vscode, "Open in VSCode" }
