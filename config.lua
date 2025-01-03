@@ -184,28 +184,6 @@ formatters.setup {
     },
 }
 
-local Slumber = {}
-Slumber.toggle = function()
-    local Terminal = require("toggleterm.terminal").Terminal
-    local slumber = Terminal:new {
-        cmd = "slumber",
-        hidden = true,
-        direction = "float",
-        float_opts = {
-            border = "none",
-            width = 100000,
-            height = 100000,
-        },
-        on_open = function(_)
-            vim.cmd "startinsert!"
-        end,
-        on_close = function(_) end,
-        count = 99,
-    }
-    slumber:toggle()
-end
-
-
 lvim.builtin.which_key.mappings['t'] = {
     name = "+Terminal",
     h = { ":FloatermNew --wintype=normal --position=botright --height=8<CR>", "Below" },
@@ -285,17 +263,41 @@ local open_pull_request_in_github = function ()
     open_in_browser(pr_url)
 end
 
+local Slumber = {}
+Slumber.toggle = function()
+    local Terminal = require("toggleterm.terminal").Terminal
+    local slumber = Terminal:new {
+        cmd = "slumber",
+        hidden = true,
+        direction = "float",
+        float_opts = {
+            border = "none",
+            width = 100000,
+            height = 100000,
+        },
+        on_open = function(_)
+            vim.cmd "startinsert!"
+        end,
+        on_close = function(_) end,
+        count = 99,
+    }
+    slumber:toggle()
+end
 
 -- View
 lvim.builtin.which_key.mappings.v = {
     name = "+View",
+    w = { Slumber.toggle, "Open in Slumber"},
     g = { ":OpenInGHFile<CR>", "View on File on GitHub" },
     h = { open_project_in_github, "View Project on GitHub" },
     m = { open_pull_request_in_github, "Open Pull Request" },
     f = { open_in_nautilus, "View in File Explorer" },
     t = { open_in_alacritty, "Open in Terminal" },
-    s = { open_in_vscode, "Open in VSCode" }
+    s = { open_in_vscode, "Open in VSCode" },
 }
+
+
+
 
 vim.diagnostic.config({
     virtual_text = true
