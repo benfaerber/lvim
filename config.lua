@@ -274,6 +274,13 @@ lvim.builtin.which_key.mappings.v = {
     s = { open_in_vscode, "Open in VSCode" }
 }
 
+lvim.builtin.which_key.mappings.x = {
+    name ="+Trouble",
+    x = { ":Trouble diagnostics toggle<CR>", "View Diagnostics"},
+    q = { ":Trouble qflist toggle<CR>", "Quick Fix List"},
+    t = { ":Trouble todo toggle<CR>", "View Todos"},
+}
+
 vim.diagnostic.config({
     virtual_text = true
 })
