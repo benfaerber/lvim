@@ -11,6 +11,7 @@ lvim.plugins = {
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {}
     },
+    "3rd/image.nvim",
     "jwalton512/vim-blade",
     "rescript-lang/vim-rescript",
     "nkrkv/nvim-treesitter-rescript",
