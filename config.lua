@@ -19,6 +19,7 @@ lvim.plugins = {
     "jparise/vim-graphql",
     "voldikss/vim-floaterm",
     "NvChad/nvim-colorizer.lua",
+    "echasnovski/mini.nvim",
     "p00f/nvim-ts-rainbow",
     "axelvc/template-string.nvim",
     "almo7aya/openingh.nvim",
@@ -311,5 +312,10 @@ vim.cmd([[set iskeyword-=_]])
 -- Case insensitive search
 vim.cmd([[set ic]])
 
+require('mason-lspconfig').setup_handlers({
+  function(server)
+    require('lvim.lsp.manager').setup(server)
+  end
+})
 -- Show line diagnostics automatically in hover window vim.o.updatetime = 250
 -- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
