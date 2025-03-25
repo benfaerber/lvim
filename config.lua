@@ -11,7 +11,6 @@ lvim.plugins = {
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {}
     },
-    "3rd/image.nvim",
     "jwalton512/vim-blade",
     "rescript-lang/vim-rescript",
     "nkrkv/nvim-treesitter-rescript",
@@ -218,6 +217,8 @@ local open_in_vscode = function ()
     run_cmd_bg("code \"" .. project_root .. "\" --new-window --goto \"" .. goto_point .. "\"")
 end
 
+
+
 local open_in_nautilus = function ()
     local dir = vim.fn.expand("%")
     run_cmd_bg("nautilus " .. dir)
@@ -238,6 +239,11 @@ end
 
 local open_in_browser = function (url)
     vim.fn.system("xdg-open " .. url)
+end
+
+local open_current_file_in_browser = function ()
+    local filepath = vim.fn.expand("%")
+    open_in_browser(filepath)
 end
 
 local open_project_in_github  = function ()
@@ -296,6 +302,7 @@ lvim.builtin.which_key.mappings.v = {
     f = { open_in_nautilus, "View in File Explorer" },
     t = { open_in_alacritty, "Open in Terminal" },
     s = { open_in_vscode, "Open in VSCode" },
+    b = { open_current_file_in_browser, "Open in Browser" },
 }
 
 
