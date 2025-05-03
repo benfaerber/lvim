@@ -293,5 +293,8 @@ vim.cmd([[set iskeyword-=_]])
 -- Case insensitive search
 vim.cmd([[set ic]])
 
+-- Basic spell check:
+vim.cmd([[setlocal spell spelllang=en_us]])
+
 -- Show line diagnostics automatically in hover window vim.o.updatetime = 250
 -- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
