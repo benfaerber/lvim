@@ -295,6 +295,7 @@ vim.cmd([[set ic]])
 
 -- Basic spell check:
 vim.cmd([[au BufNewFile,BufRead *.md setlocal spell spelllang=en_us]])
+vim.cmd([[au BufNewFile,BufRead *.txt setlocal spell spelllang=en_us]])
 
 -- Show line diagnostics automatically in hover window vim.o.updatetime = 250
 -- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
