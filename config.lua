@@ -264,11 +264,22 @@ local open_project_in_github  = function ()
     vim.fn.system("xdg-open " .. repo_url)
 end
 
+local open_pull_request_in_github = function ()
+    local repo_url = vim.fn.system("git -C " .. project_root .. " config --get remote.origin.url")
+    repo_url = repo_url:gsub("%.git%s*$", "")
+    local branch = vim.fn.system("git -C " .. project_root .. " rev-parse --abbrev-ref HEAD")
+    branch = vim.trim(branch)
+
+    local merge_url = repo_url .. "/compare/master..." .. branch
+    vim.fn.system("xdg-open " .. merge_url)
+end
+
 -- View
 lvim.builtin.which_key.mappings.v = {
     name = "+View",
     g = { ":OpenInGHFile<CR>", "View on File on GitHub" },
     h = { open_project_in_github, "View Project on GitHub" },
+    r = { open_pull_request_in_github, "Open PR on GitHub" },
     f = { open_in_nautilus, "View in File Explorer" },
     t = { open_in_alacritty, "Open in Terminal" },
     s = { open_in_vscode, "Open in VSCode" }
