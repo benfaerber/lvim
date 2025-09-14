@@ -138,8 +138,10 @@ map <leader>rn :action RenameElement<CR>
 " Code actions
 map <leader>ca :action ShowIntentionActions<CR>
 
-" Format code
-map <leader>f :action ReformatCode<CR>
+map <leader>f :action GoToFile<CR>
+
+map <leader>lf :action ReformatCode<CR>  
+map <leader>lj :action GotoNextError<CR>
 
 " ===================================================================
 " Navigation Mappings
@@ -163,6 +165,8 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+map <C-h> :action ActivateProjectToolWindow<CR>
+map <C-l> :action HideAllWindows<CR>
 " ===================================================================
 " File Explorer
 " ===================================================================
