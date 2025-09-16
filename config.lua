@@ -348,6 +348,7 @@ vim.cmd([[set ic]])
 -- Basic spell check:
 vim.cmd([[au BufNewFile,BufRead *.md setlocal spell spelllang=en_us]])
 vim.cmd([[au BufNewFile,BufRead *.txt setlocal spell spelllang=en_us]])
+vim.cmd([[au BufNewFile,BufRead *.php setlocal spell spelllang=en_us]])
 
 require('mason-lspconfig').setup_handlers({
   function(server)
