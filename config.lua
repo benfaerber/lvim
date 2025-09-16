@@ -28,6 +28,13 @@ lvim.plugins = {
         "folke/trouble.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
         opts = {},
+    },
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+        ---@module 'render-markdown'
+        ---@type render.md.UserConfig
+        opts = {},
     }
 }
 
@@ -297,20 +304,34 @@ Slumber.toggle                       = function()
     slumber:toggle()
 end
 
+local open_pull_request_in_github = function ()
+    local repo_url = vim.fn.system("git -C " .. project_root .. " config --get remote.origin.url")
+    repo_url = repo_url:gsub("%.git%s*$", "")
+    local branch = vim.fn.system("git -C " .. project_root .. " rev-parse --abbrev-ref HEAD")
+    branch = vim.trim(branch)
+
+    local merge_url = repo_url .. "/compare/master..." .. branch
+    vim.fn.system("xdg-open " .. merge_url)
+end
+
 -- View
 lvim.builtin.which_key.mappings.v    = {
     name = "+View",
     w = { Slumber.toggle, "Open in Slumber" },
     g = { ":OpenInGHFile<CR>", "View on File on GitHub" },
     h = { open_project_in_github, "View Project on GitHub" },
-    m = { open_pull_request_in_github, "Open Pull Request" },
+    r = { open_pull_request_in_github, "Open PR on GitHub" },
     f = { open_in_nautilus, "View in File Explorer" },
     t = { open_in_alacritty, "Open in Terminal" },
     s = { open_in_vscode, "Open in VSCode" },
 }
 
-
-
+lvim.builtin.which_key.mappings.x = {
+    name ="+Trouble",
+    x = { ":Trouble diagnostics toggle<CR>", "View Diagnostics"},
+    q = { ":Trouble qflist toggle<CR>", "Quick Fix List"},
+    t = { ":Trouble todo toggle<CR>", "View Todos"},
+}
 
 vim.diagnostic.config({
     virtual_text = true
@@ -323,6 +344,10 @@ vim.cmd([[set relativenumber]])
 vim.cmd([[set iskeyword-=_]])
 -- Case insensitive search
 vim.cmd([[set ic]])
+
+-- Basic spell check:
+vim.cmd([[au BufNewFile,BufRead *.md setlocal spell spelllang=en_us]])
+vim.cmd([[au BufNewFile,BufRead *.txt setlocal spell spelllang=en_us]])
 
 require('mason-lspconfig').setup_handlers({
   function(server)
