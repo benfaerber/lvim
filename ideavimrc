@@ -1,0 +1,301 @@
+" Master for life!
+" I will never be a cuck and use main!
+
+" ===================================================================
+" Basic Settings
+" ===================================================================
+
+" Enable relative line numbers
+set relativenumber
+set number
+
+" Case insensitive search
+set ignorecase
+set smartcase
+
+" Make _ count as a word separator
+set iskeyword-=_
+
+" Enable clipboard integration
+set clipboard+=unnamed
+
+" Enable incremental search
+set incsearch
+
+" Enable highlight search
+set hlsearch
+
+" ===================================================================
+" IdeaVim Plugins
+" ===================================================================
+
+" Enable which-key for keybinding help
+set which-key
+
+" Enable commentary for commenting
+set commentary
+
+" Enable surround for text objects
+set surround
+
+" Enable multiple cursors
+set multiple-cursors
+
+" Enable text objects
+set textobj-entire
+
+" Enable exchange for text swapping
+set exchange
+
+" Enable highlightedyank
+set highlightedyank
+
+" Enable argtextobj for argument text objects
+set argtextobj
+
+" ===================================================================
+" Leader Key Mappings (Space)
+" ===================================================================
+
+" Set leader key
+let mapleader = " "
+
+" ===================================================================
+" Terminal Mappings (t)
+" ===================================================================
+
+" Terminal shortcuts - using IntelliJ's built-in terminal
+map <leader>th :action ActivateTerminalToolWindow<CR>
+map <leader>tv :action ActivateTerminalToolWindow<CR>
+map <leader>tt :action ActivateTerminalToolWindow<CR>
+map <leader>tn :action Terminal.OpenInTerminal<CR>
+
+" ===================================================================
+" Search Mappings (s)
+" ===================================================================
+
+" File search
+map <leader>sf :action GotoFile<CR>
+map <leader>st :action FindInPath<CR>
+map <leader>sg :action FindInPath<CR>
+map <leader>sb :action RecentFiles<CR>
+map <leader>sr :action RecentFiles<CR>
+map <leader>sp :action ManageRecentProjects<CR>
+
+" ===================================================================
+" Git Mappings (g)
+" ===================================================================
+
+map <leader>gg :action Vcs.Show.Local.Changes<CR>
+map <leader>gb :action Git.Branches<CR>
+map <leader>gc :action CheckinProject<CR>
+map <leader>gd :action Compare.SameVersion<CR>
+map <leader>gl :action Vcs.Show.Log<CR>
+map <leader>gp :action Vcs.Push<CR>
+map <leader>gw :action Vcs.OpenRepositoryInBrowser<CR>
+
+" ===================================================================
+" View Mappings (v) 
+" ===================================================================
+
+" View related actions - using command palette for GitHub actions
+map <leader>vg :action GotoAction<CR>github<CR>
+map <leader>vh :action GotoAction<CR>github<CR>
+map <leader>vr :action GotoAction<CR>github<CR>
+map <leader>vf :action RevealIn<CR>
+map <leader>vt :action Terminal.OpenInTerminal<CR>
+map <leader>vs :action GotoAction<CR>vscode<CR>
+
+" ===================================================================
+" Trouble/Diagnostics Mappings (x)
+" ===================================================================
+
+" Error and problem navigation
+map <leader>xx :action ActivateProblemsViewToolWindow<CR>
+map <leader>xq :action ActivateProblemsViewToolWindow<CR>
+map <leader>xt :action ActivateTODOToolWindow<CR>
+
+" ===================================================================
+" LSP-like Mappings
+" ===================================================================
+
+" Go to definition
+map gd :action GotoDeclaration<CR>
+map gD :action GotoTypeDeclaration<CR>
+
+" Go to implementation
+map gi :action GotoImplementation<CR>
+
+" Go to references
+map gr :action FindUsages<CR>
+
+" Hover documentation
+map K :action QuickJavaDoc<CR>
+
+" Rename
+map <leader>rn :action RenameElement<CR>
+
+" Code actions
+map <leader>ca :action ShowIntentionActions<CR>
+
+map <leader>f :action GoToFile<CR>
+
+map <leader>lf :action ReformatCode<CR>  
+map <leader>lj :action GotoNextError<CR>
+
+" ===================================================================
+" Navigation Mappings
+" ===================================================================
+
+" Next/Previous error
+map ]d :action GotoNextError<CR>
+map [d :action GotoPreviousError<CR>
+
+" Next/Previous change
+map ]c :action VcsShowNextChangeMarker<CR>
+map [c :action VcsShowPrevChangeMarker<CR>
+
+" ===================================================================
+" Window Navigation
+" ===================================================================
+
+" Window splits (using IntelliJ's split editors)
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+map <C-h> :action ActivateProjectToolWindow<CR>
+map <C-l> :action HideAllWindows<CR>
+" ===================================================================
+" File Explorer
+" ===================================================================
+
+" Toggle file explorer
+map <leader>e :action ActivateProjectToolWindow<CR>
+
+" ===================================================================
+" Buffer/Tab Management
+" ===================================================================
+
+" Tab navigation
+map <leader>bn :action NextTab<CR>
+map <leader>bb :action PreviousTab<CR>
+map <leader>bd :action CloseContent<CR>
+map <leader>bo :action CloseAllEditorsButActive<CR>
+map <leader>c :action CloseContent<CR>
+
+" ===================================================================
+" Additional Useful Mappings
+" ===================================================================
+
+" Clear search highlighting
+map <leader>nh :nohlsearch<CR>
+
+" Quick save
+map <leader>w :w<CR>
+
+" Quit
+map <leader>q :q<CR>
+
+" Select all
+map <leader>a ggVG
+
+" Paste from system clipboard in insert mode
+imap <C-v> <C-r>+
+
+" ===================================================================
+" IntelliJ Specific Actions
+" ===================================================================
+
+" Run configurations
+map <leader>rr :action Run<CR>
+map <leader>rd :action Debug<CR>
+map <leader>rc :action RunClass<CR>
+
+" Refactoring
+map <leader>re :action RenameElement<CR>
+map <leader>rf :action RenameFile<CR>
+map <leader>rm :action Move<CR>
+
+" Code generation
+map <leader>cg :action Generate<CR>
+map <leader>ci :action OptimizeImports<CR>
+
+" Toggle comments (using commentary plugin)
+map <leader>cc :action CommentByLineComment<CR>
+map <leader>cb :action CommentByBlockComment<CR>
+
+" Bookmarks
+map <leader>mm :action ToggleBookmark<CR>
+map <leader>ml :action ShowBookmarks<CR>
+
+" ===================================================================
+" Search and Replace
+" ===================================================================
+
+" Find and replace
+map <leader>fr :action Replace<CR>
+map <leader>fR :action ReplaceInPath<CR>
+
+" ===================================================================
+" Miscellaneous
+" ===================================================================
+
+" Zen mode / Distraction-free mode
+map <leader>z :action ToggleDistractionFreeMode<CR>
+
+" Show file structure
+map <leader>o :action FileStructurePopup<CR>
+
+" Recent locations
+map <leader>rl :action RecentLocations<CR>
+
+" ===================================================================
+" Custom Actions for Workflow
+" ===================================================================
+
+" Git blame (closest equivalent)
+map <leader>gb :action Annotate<CR>
+
+" Show diagnostics
+map <leader>d :action ShowErrorDescription<CR>
+
+" ===================================================================
+" Insert Mode Mappings
+" ===================================================================
+
+" Exit insert mode quickly
+imap jk <Esc>
+imap kj <Esc>
+
+" ===================================================================
+" Visual Mode Mappings
+" ===================================================================
+
+" Maintain selection after indenting
+vmap < <gv
+vmap > >gv
+
+" Move text up and down
+vmap J :move '>+1<CR>gv=gv
+vmap K :move '<-2<CR>gv=gv
+
+" ===================================================================
+" Additional Settings
+" ===================================================================
+
+" Enable smart join
+set ideajoin
+
+" Enable idea marks
+set ideamarks
+
+" Track action IDs for debugging
+" set trackactionids
+
+" ===================================================================
+" Status Line Information
+" ===================================================================
+" Note: IdeaVim doesn't have lualine equivalent, but IntelliJ's 
+" status bar shows similar information including git blame when available
