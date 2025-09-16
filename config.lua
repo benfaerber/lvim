@@ -11,6 +11,7 @@ lvim.plugins = {
         dependencies = { "nvim-lua/plenary.nvim" },
         opts = {}
     },
+    "3rd/image.nvim",
     "jwalton512/vim-blade",
     "rescript-lang/vim-rescript",
     "nkrkv/nvim-treesitter-rescript",
@@ -19,6 +20,7 @@ lvim.plugins = {
     "jparise/vim-graphql",
     "voldikss/vim-floaterm",
     "NvChad/nvim-colorizer.lua",
+    "echasnovski/mini.nvim",
     "p00f/nvim-ts-rainbow",
     "axelvc/template-string.nvim",
     "almo7aya/openingh.nvim",
@@ -152,8 +154,19 @@ dev_icons.setup({
 
 require 'colorizer'.setup()
 
+
+vim.cmd([[
+  augroup FiletypeShiftwidth
+    autocmd!
+    autocmd FileType * setlocal shiftwidth=4
+    autocmd FileType ocaml setlocal shiftwidth=2
+    autocmd FileType python setlocal shiftwidth=4
+    autocmd FileType javascript,typescript setlocal shiftwidth=4
+    autocmd FileType rust setlocal shiftwidth=4
+  augroup END
+]])
 -- Set shift width to 4 on each new buffer
-vim.cmd([[autocmd BufEnter * setlocal shiftwidth=4]])
+-- vim.cmd([[autocmd BufEnter * setlocal shiftwidth=2]])
 -- Set working dir to location of current buffer
 -- vim.cmd([[autocmd BufEnter * setlocal autochdir]])
 
@@ -191,8 +204,87 @@ formatters.setup {
     },
 }
 
-local Slumber = {}
-Slumber.toggle = function()
+lvim.builtin.which_key.mappings['t'] = {
+    name = "+Terminal",
+    h = { ":FloatermNew --wintype=normal --position=botright --height=8<CR>", "Below" },
+    v = { ":FloatermNew --wintype=vsplit --position=right --height=8<CR>", "Side" },
+    f = { ":FloatermNew --title=Python python3<CR>", "Python" },
+    g = { ":FloatermNew --title=OCaml utop<CR>", "OCaml" },
+    j = { ":FloatermNew --title=Javascript node<CR>", "Javascript" },
+    d = { ":FloatermNew --title=Haskell ghci<CR>", "Haskell" },
+    t = { ":FloatermToggle --title=Shell<CR>", "Popup" },
+    p = { ":FloatermNew --title=Laravel --wintype=normal --position=botright --height=8 tinker<CR>", "Tinker" },
+    n = { ":! alacritty --working-directory \"%:p:h\" &<CR>", "Open in Terminal in new window" },
+}
+
+lvim.builtin.which_key.mappings['T'] = {}
+
+lvim.builtin.which_key.mappings.s.p  = { ":Telescope projects<CR>", "Projects" }
+lvim.builtin.which_key.mappings.g.w  = { ":OpenInGHFile<CR>", "Open on GitHub" }
+
+local run_cmd_bg                     = function(cmd)
+    vim.cmd(":silent !" .. cmd .. " &")
+end
+
+-- This opens the current file (respecting line and column) in VSCode
+local open_in_vscode                 = function()
+    local filepath = vim.fn.expand("%")
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    -- To account for insert mode cursor vs normal cursor
+    local offset_col = col + 2
+    local goto_point = filepath .. ":" .. line .. ":" .. offset_col
+    run_cmd_bg("code \"" .. project_root .. "\" --new-window --goto \"" .. goto_point .. "\"")
+end
+
+local open_in_nautilus               = function()
+    local dir = vim.fn.expand("%")
+    run_cmd_bg("nautilus " .. dir)
+end
+
+local get_dir                        = function(filepath)
+    return string.match(filepath, "^(.-)/[^/]*$")
+end
+
+local get_file                       = function(filepath)
+    return string.match(filepath, "^.+/([^/]+)$")
+end
+
+local open_in_alacritty              = function()
+    local dir = get_dir(vim.fn.expand("%"))
+    run_cmd_bg("alacritty --working-directory " .. dir)
+end
+
+local open_in_browser                = function(url)
+    vim.fn.system("xdg-open " .. url)
+end
+
+local open_project_in_github         = function()
+    local repo_url = vim.fn.system("git -C " .. project_root .. " config --get remote.origin.url")
+    open_in_browser(repo_url)
+end
+
+local trim                           = function(s)
+    return s:gsub("%s+", "")
+end
+
+local log                            = function(msg)
+    os.execute("echo \"[DEBUG $(date +\"%Y-%m-%d %H:%M:%S\")] " .. msg .. "\" >> /home/ben/.config/lvim/debug.log")
+end
+
+local open_pull_request_in_github    = function()
+    local repo_url = vim.fn.system("git -C " .. project_root .. " config --get remote.origin.url")
+    -- This usually ends with git
+    local naked_repo_url = trim(repo_url):gsub('.git$', "")
+
+    local branch_name = trim(vim.fn.system("git rev-parse --abbrev-ref HEAD"))
+    local master_path = trim(vim.fn.system("git symbolic-ref refs/remotes/origin/HEAD"))
+
+    local pr_url = naked_repo_url .. "/compare/" .. branch_name
+    open_in_browser(pr_url)
+end
+
+local Slumber                        = {}
+Slumber.toggle                       = function()
     local Terminal = require("toggleterm.terminal").Terminal
     local slumber = Terminal:new {
         cmd = "slumber",
@@ -212,58 +304,6 @@ Slumber.toggle = function()
     slumber:toggle()
 end
 
-
-lvim.builtin.which_key.mappings['t'] = {
-    name = "+Terminal",
-    h = { ":FloatermNew --wintype=normal --position=botright --height=8<CR>", "Below" },
-    v = { ":FloatermNew --wintype=vsplit --position=right --height=8<CR>", "Side" },
-    f = { ":FloatermNew --title=Python python3<CR>", "Python" },
-    g = { ":FloatermNew --title=OCaml utop<CR>", "OCaml" },
-    j = { ":FloatermNew --title=Javascript node<CR>", "Javascript" },
-    d = { ":FloatermNew --title=Haskell ghci<CR>", "Haskell" },
-    t = { ":FloatermToggle --title=Shell<CR>", "Popup" },
-    p = { ":FloatermNew --title=Laravel --wintype=normal --position=botright --height=8 tinker<CR>", "Tinker" },
-    n = { ":! alacritty --working-directory \"%:p:h\" &<CR>", "Open in Terminal in new window" },
-}
-
-lvim.builtin.which_key.mappings['T'] = {}
-
-lvim.builtin.which_key.mappings.s.p = { ":Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings.g.w = { ":OpenInGHFile<CR>", "Open on GitHub" }
-
-local run_cmd_bg = function (cmd)
-    vim.cmd(":silent !" .. cmd .. " &")
-end
-
--- This opens the current file (respecting line and column) in VSCode
-local open_in_vscode = function ()
-    local filepath = vim.fn.expand("%")
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    -- To account for insert mode cursor vs normal cursor  
-    local offset_col = col + 2
-    local goto_point = filepath .. ":" .. line .. ":" .. offset_col
-    run_cmd_bg("code \"" .. project_root .. "\" --new-window --goto \"" .. goto_point .. "\"")
-end
-
-local open_in_nautilus = function ()
-    local dir = vim.fn.expand("%")
-    run_cmd_bg("nautilus " .. dir)
-end
-
-local get_dir = function (filepath)
-    return string.match(filepath, "^(.-)/[^/]*$")
-end
-
-local open_in_alacritty = function ()
-    local dir = get_dir(vim.fn.expand("%"))
-    run_cmd_bg("alacritty --working-directory " .. dir)
-end
-
-local open_project_in_github  = function ()
-    local repo_url = vim.fn.system("git -C " .. project_root .. " config --get remote.origin.url")
-    vim.fn.system("xdg-open " .. repo_url)
-end
-
 local open_pull_request_in_github = function ()
     local repo_url = vim.fn.system("git -C " .. project_root .. " config --get remote.origin.url")
     repo_url = repo_url:gsub("%.git%s*$", "")
@@ -275,14 +315,15 @@ local open_pull_request_in_github = function ()
 end
 
 -- View
-lvim.builtin.which_key.mappings.v = {
+lvim.builtin.which_key.mappings.v    = {
     name = "+View",
+    w = { Slumber.toggle, "Open in Slumber" },
     g = { ":OpenInGHFile<CR>", "View on File on GitHub" },
     h = { open_project_in_github, "View Project on GitHub" },
     r = { open_pull_request_in_github, "Open PR on GitHub" },
     f = { open_in_nautilus, "View in File Explorer" },
     t = { open_in_alacritty, "Open in Terminal" },
-    s = { open_in_vscode, "Open in VSCode" }
+    s = { open_in_vscode, "Open in VSCode" },
 }
 
 lvim.builtin.which_key.mappings.x = {
@@ -308,5 +349,10 @@ vim.cmd([[set ic]])
 vim.cmd([[au BufNewFile,BufRead *.md setlocal spell spelllang=en_us]])
 vim.cmd([[au BufNewFile,BufRead *.txt setlocal spell spelllang=en_us]])
 
+require('mason-lspconfig').setup_handlers({
+  function(server)
+    require('lvim.lsp.manager').setup(server)
+  end
+})
 -- Show line diagnostics automatically in hover window vim.o.updatetime = 250
 -- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
