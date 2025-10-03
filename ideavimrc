@@ -1,6 +1,5 @@
 " Master for life!
 " I will never be a cuck and use main!
-
 " ===================================================================
 " Basic Settings
 " ===================================================================
@@ -75,6 +74,9 @@ map <leader>tn :action Terminal.OpenInTerminal<CR>
 " ===================================================================
 
 " File search
+nnoremap <leader>f :action GotoFile<CR>
+nnoremap <leader>/ :action FindInPath<CR>
+nnoremap <leader>b :action RecentFiles<CR>
 map <leader>sf :action GotoFile<CR>
 map <leader>st :action FindInPath<CR>
 map <leader>sg :action FindInPath<CR>
