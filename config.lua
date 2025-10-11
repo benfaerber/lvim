@@ -161,6 +161,7 @@ vim.cmd([[
     autocmd FileType * setlocal shiftwidth=4
     autocmd FileType ocaml setlocal shiftwidth=2
     autocmd FileType python setlocal shiftwidth=4
+    autocmd FileType go setlocal shiftwidth=2
     autocmd FileType javascript,typescript setlocal shiftwidth=4
     autocmd FileType rust setlocal shiftwidth=4
   augroup END
