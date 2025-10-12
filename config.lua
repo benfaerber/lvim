@@ -316,7 +316,7 @@ local open_pull_request_in_github = function ()
 end
 
 -- View
-lvim.builtin.which_key.mappings.v    = {
+lvim.builtin.which_key.mappings.v = {
     name = "+View",
     w = { Slumber.toggle, "Open in Slumber" },
     g = { ":OpenInGHFile<CR>", "View on File on GitHub" },
